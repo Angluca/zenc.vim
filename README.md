@@ -18,14 +18,14 @@ Vim:
 
 ```bash
 # Replace "manual" with whatever namespace you prefer:
-git clone https://github.com/davidscholberg/Zen-C.vim.git ~/.vim/pack/manual/start/Zen-C.vim
+git clone https://github.com/zenc-lang/zenc.vim.git ~/.vim/pack/manual/start/zenc.vim
 ```
 
 Neovim:
 
 ```bash
 # Replace "manual" with whatever namespace you prefer:
-git clone https://github.com/davidscholberg/Zen-C.vim.git ~/.local/share/nvim/site/pack/manual/start/Zen-C.vim
+git clone https://github.com/zenc-lang/zenc.vim.git ~/.local/share/nvim/site/pack/manual/start/zenc.vim
 ```
 
 ### Configuration
