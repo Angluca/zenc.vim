@@ -43,7 +43,6 @@ syn keyword zencKeyword
     \ ref
     \ return
     \ struct
-    \ test
     \ trait
     \ union
     \ unless
@@ -54,7 +53,7 @@ syn keyword zencKeyword
 
 " These are keywords in C but not Zen C. They are included here to provide
 " better highlighting in `raw` blocks.
-syn keyword zencKeyword
+syn keyword zencSComment
     \ _Alignas
     \ _Alignof
     \ _Atomic
@@ -76,6 +75,7 @@ syn keyword zencKeyword
     \ restrict
     \ static
     \ static_assert
+    \ assert
     \ switch
     \ thread_local
     \ typedef
@@ -143,13 +143,20 @@ syn keyword zencConstant
     \ nullptr
     \ true
 
-syn match zencOperator /\v(\<\=|\>\=|\=\=|!\=|\=|\.|\+|-|\*|\/|\%|\<|\>|\&|\||\^|!|\~|\[|\])/
+syn keyword zencRepeat do while loop for in
+syn keyword zencLabel default ref self
+syn keyword zencKeyword break continue return defer goto
+syn keyword zencConditional if else match unless switch case
+syn keyword zencImport import
+syn keyword zencException throw try catch raw
 
+syn match zencOperator /\v(\<\=|\>\=|\=\=|!\=|\=|\.|\+|-|\*|\/|\%|\<|\>|\&|\||\^|!|\~|\[|\])/
 syn match zencGenericOperator contained /\v\*/
 
-syn match zencDelimiter /\v(-\>|;|:|\(|\)|,|\{|\})/
-
+syn match zencDelimiter /\v(;|:|\(|\)|,|\{|\})/
 syn match zencGenericDelimiter contained /\v[\<,\>]/
+
+syn match zencException /\v(-\>)/
 
 " The main reason this region match even exists is to prevent zencFunctionName
 " from matching inside of a generic type specifier.
@@ -225,13 +232,31 @@ syn region zencComment start=/\v\/\*/ end=/\v\*\//
 " Fixes comment highlighting when scrolling buffer with <C-e>.
 syn sync ccomment zencComment
 
+" -- Custom ------
+syn match zencTest '\v^(test)\s+'
+syn match zencMacro '\v<[_]*\u[A-Z0-9_]*>' " ABC
+syn match zencType '\v<[_]*\u[A-Z0-9_]*[a-z]+\w*>' " Abc
+syn match zencRepeat '\v([^\.](\.|::|-\>))@<=\w\w*' " aaa->x
+syn match zencType '\v<\w+>\ze(::|\<(\w+\s*(\<.*\>|\[.*\])?\s*[,]?\s*)*\>)' "foo::
+syn match zencException  '\v(\W@<=[~&!*]+\ze[\(\[\{\<]*[-]?\w)|(\w@<=[*!?]+\ze\W)' " *xx
+syn match zencSComment '\v<\@(\w+)>' "@def
+
+syn match zencTypedef "\h\w*" display contained
+syn keyword zencKeyword union struct enum trait nextgroup=zencTypedef skipwhite
+syn match zencMacro "\h\w*" display contained
+syn keyword zencKeyword def nextgroup=zencMacro skipwhite
+" ---------------
+
 hi def link zencKeyword Statement
-hi def link zencType Type
+"hi def link zencType Type
+hi def link zencType MoreMsg
 hi def link zencConstant Constant
 hi def link zencOperator Operator
 hi def link zencGenericOperator Operator
-hi def link zencDelimiter Delimiter
-hi def link zencGenericDelimiter Delimiter
+"hi def link zencDelimiter Delimiter
+"hi def link zencGenericDelimiter Delimiter
+hi def link zencDelimiter Constant
+hi def link zencGenericDelimiter Constant
 hi def link zencString String
 hi def link zencContainedString String
 hi def link zencAngleString String
@@ -239,9 +264,21 @@ hi def link zencNumber Number
 hi def link zencFunctionName Function
 hi def link zencDecorator Statement
 hi def link zencEllipsis Special
-hi def link zencMacro Constant
+"hi def link zencMacro Constant
+hi def link zencMacro Macro
 hi def link zencInclude Statement
 hi def link zencComment Comment
+
+hi def link zencLabel Label
+hi def link zencRepeat Repeat
+hi def link zencImport Include
+hi def link zencFunc Function
+hi def link zencSymbol Changed
+hi def link zencConditional Conditional
+hi def link zencSComment SpecialComment
+hi def link zencTypedef Changed
+hi def link zencException Exception
+hi def link zencTest Added
 
 let b:current_syntax = "zenc"
 
