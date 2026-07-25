@@ -12,7 +12,7 @@ If you use a plugin manager, please consult your plugin manager's docs for insta
 
 For users of [lazy.nvim](https://github.com/folke/lazy.nvim) or [yegappan/lsp](https://github.com/yegappan/lsp), note that this plugin already does its own lazy loading (it will only be loaded when you open a `.zc` file). As such, you don't need to set any additional lazy loading options for this plugin.
 ```vim
-Plug 'yegappan/lsp'
+Plug 'zenc-lang/zenc.vim'
 
 setl omnifunc=LspOmniFunc
 au filetype zenc call LspAddServer([#{

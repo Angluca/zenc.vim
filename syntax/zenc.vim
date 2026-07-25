@@ -149,13 +149,15 @@ syn keyword zencKeyword break continue return defer goto
 syn keyword zencConditional if else match unless switch case
 syn keyword zencImport import
 syn keyword zencException throw try catch raw
+syn keyword zencSComment print println eprint eprintln
 
 syn match zencOperator /\v(\<\=|\>\=|\=\=|!\=|\=|\.|\+|-|\*|\/|\%|\<|\>|\&|\||\^|!|\~|\[|\])/
 syn match zencGenericOperator contained /\v\*/
 
-syn match zencDelimiter /\v(;|:|\(|\)|,|\{|\})/
+syn match zencDelimiter /\v(\(|\)|\{|\})/
 syn match zencGenericDelimiter contained /\v[\<,\>]/
 
+syn match zencSymbol '[,;:\.]'
 syn match zencException /\v(-\>)/
 
 " The main reason this region match even exists is to prevent zencFunctionName
@@ -207,7 +209,8 @@ syn match zencIdentifier /\v[A-Za-z_]\w*/
 " This will highlight both generic and non generic function names.
 syn match zencFunctionName /\v[A-Za-z_]\w*\ze(\<[0-9A-Za-z_, \t\<\>\*]+\>)?\(/
 
-syn match zencDecorator /\v\@\w+/
+"syn match zencDecorator /\v\@\w+/
+syn match zencSComment /\v\@\w+/
 
 syn match zencEllipsis /\v\.\.\./
 
@@ -239,8 +242,6 @@ syn match zencType '\v<[_]*\u[A-Z0-9_]*[a-z]+\w*>' " Abc
 syn match zencRepeat '\v([^\.](\.|::|-\>))@<=\w\w*' " aaa->x
 syn match zencType '\v<\w+>\ze(::|\<(\w+\s*(\<.*\>|\[.*\])?\s*[,]?\s*)*\>)' "foo::
 syn match zencException  '\v(\W@<=[~&!*]+\ze[\(\[\{\<]*[-]?\w)|(\w@<=[*!?]+\ze\W)' " *xx
-syn match zencSComment '\v<\@(\w+)>' "@def
-
 syn match zencTypedef "\h\w*" display contained
 syn keyword zencKeyword union struct enum trait nextgroup=zencTypedef skipwhite
 syn match zencMacro "\h\w*" display contained
